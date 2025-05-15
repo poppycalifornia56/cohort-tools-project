@@ -18,11 +18,22 @@ const seedDatabase = async () => {
     await Student.deleteMany({});
     console.log("Cleared existing data");
 
-    await Cohort.insertMany(cohorts);
+    const processedCohorts = cohorts.map((cohort) => ({
+      ...cohort,
+      _id: mongoose.Types.ObjectId(cohort._id),
+    }));
+
+    await Cohort.insertMany(processedCohorts);
     console.log("Inserted cohort data");
 
-    await Student.insertMany(students);
-    console.log("Inserted student data");
+    const processedStudents = students.map((student) => ({
+      ...student,
+      _id: mongoose.Types.ObjectId(student._id),
+      cohort: mongoose.Types.ObjectI,
+    }));
+
+    await Student.insertMany(processedStudents);
+    console.log("Inserted student data with proper references");
 
     console.log("Database seeded successfully!");
     process.exit(0);
