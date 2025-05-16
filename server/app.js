@@ -2,6 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const PORT = 5005;
+const authRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
+
 
 require("./models/index");
 
@@ -29,6 +32,9 @@ app.get("/docs", (req, res) => {
 
 app.use("/api/cohorts", cohortRoutes);
 app.use("/api/students", studentRoutes);
+
+app.use("/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
